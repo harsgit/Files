@@ -1,0 +1,136 @@
+SQL> Drop table employee;
+
+Table dropped.
+
+SQL> Drop table salgrade;
+Drop table salgrade
+           *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* Drop table salgrade
+SQL> DROP sequence empCode_seq;
+DROP sequence empCode_seq
+              *
+ERROR at line 1:
+ORA-02289: sequence does not exist
+
+ Q1)    CREATE TABLE salgrade(grade CHAR(2) PRIMARY KEY,minsal NUMBER,maxsal NUMBER)
+
+
+Table created.
+
+Q2)    CREATE TABLE EMPLOYEE(employee_code NUMBER  PRIMARY KEY,
+  2          Employee_name VARCHAR2(15),
+  3          Date_Of_Joining DATE,
+  4         Employee_salary NUMBER,
+  5*        grade CHAR(2),Constraint grade_fk FOREIGN KEY (grade) references salgrade(grade))
+Table created.
+
+Q3)   SQL> insert into salgrade values('A',10000,20000);
+
+1 row created.
+
+SQL> insert into salgrade values('B',20001,40000);
+
+1 row created.
+
+SQL> insert into salgrade values('C',40001,60000);
+
+1 row created.
+SQL> insert into employee VALUES(101,'preetham','10-JAN-2010',18000,'A');
+
+1 row created.
+
+SQL> insert into employee VALUES(102,'Aakash','10-NOV-2005',48000,'C');
+
+1 row created.
+
+SQL> insert into employee VALUES(103,'kishore','19-DEC-2011',21000,'B');
+
+1 row created.
+
+SQL> insert into employee VALUES(104,'Reena','23-JUN-2006',42000,'C');
+
+1 row created.
+
+SQL> insert into employee VALUES(105,'Kailash','5-FEB-2004',46000,'C');
+
+1 row created.
+
+SQL> insert into employee VALUES(106,'Sahana','18-NOV-2003',52000,'C');
+
+1 row created.
+
+SQL> insert into employee VALUES(107,'Keerthana','25-JUL-2006',27000,'B');
+
+1 row created.
+
+
+Q4)SQL> ed
+Wrote file afiedt.buf
+
+  1  CREATE Sequence empCode_seq MINVALUE 108
+  2   START WITH 108
+  3*    INCREMENT BY 1
+SQL> /
+
+Sequence created.
+
+Q1)CREATE OR REPLACE PROCEDURE employee_procedure AS
+  2  
+  3   EmployeeName employee.employee_name%TYPE;
+  4  Salary employee.employee_salary%TYPE;
+  5  Grade salgrade.grade%TYPE;
+  6  MinSalary salgrade.minsal%TYPE;
+  7  MaxSalary salgrade.maxsal%TYPE;
+  8      BEGIN
+ 	V_empcode:= '&employee_code';
+  9      FOR  A_Q IN(SELECT E.employee_code,E.employeeName,E.employee_salary,S.grade,S.Minsal,S.maxsal  FROM employee E,salgrade S WHERE E.grade='A')
+ 10      LOOP
+ 11   Employee_id:=A_Q.employee_code;
+ 12     EmployeeName:=A_Q.employee_name;
+ 13     Salary:=A_Q.employee_salary;
+ 14     Grade:=A_Q.grade;
+ 15  MinSalary:=A_Q.minsal;
+ 16  MaxSalary:=A_Q.maxsal;
+ 17    END LOOP;
+ 18     DBMS_OUTPUT.PUT_LINE(' EmployeeId'||employee_code||'EmployeeName '||employee_name||'Salary'||employee_salary||"grade"||grade||'minSalary'||minsal||'MaxSalary'||maxsal);
+ 19*  END;
+SQL> /
+ 
+Enter value for  employee_code :101
+V_empcode='&employee_code';
+EmployeeId101EmployeeNamepreethamSalary18000gradeAMinSalary10000MaxSalary20
+
+
+Q2B)SQL> alter table employee ADD Title char;
+
+Table altered.
+
+Q2C)SQL> SELECT COUNT(*) FROM employee WHERE eMPLOYEE_SALARY > ANY(SELECT AVG(employee_salary) FROM employee)
+  2  /
+
+  COUNT(*)
+----------
+         4
+
+Q3)SQL> INSERT INTO EMPLOYEE VALUES ('&employee_code','&employee_name','&Date_Of_joining','&employee_salary','&grade','&Title')
+  2  /
+Enter value for employee_code: 108
+Enter value for employee_name: rohan
+Enter value for date_of_joining: 10-nov-2018
+Enter value for employee_salary: 18000
+Enter value for grade: a
+Enter value for title:
+old   1: INSERT INTO EMPLOYEE VALUES ('&employee_code','&employee_name','&Date_Of_joining','&employee_salary','&grade','&Title')
+new   1: INSERT INTO EMPLOYEE VALUES (108,'rohan','10-nov-2018',18000,'A','na')
+INSERT INTO EMPLOYEE VALUES (108,'rohan','10-nov-2018',18000,'A','na')
+
+1 row created.
+
+

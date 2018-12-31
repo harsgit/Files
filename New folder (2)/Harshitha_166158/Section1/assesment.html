@@ -1,0 +1,58 @@
+<html>
+<head>
+<title>
+Employee Details
+</title>
+</head>
+<body>
+<script>
+function nwindow()
+ {
+ 
+ var x=window.open("file:///C:/Users/hs10/Desktop/prob1.html","myWindow","_blank");
+ var x
+ 
+ x.document.write("this is  content in new window");
+ }
+</script>
+
+<table>
+<tr>
+<th colspan=2><h1> Employee Details</h1></th>
+<tr>
+<td>Title</td>
+<td>
+<select>
+<option value="Title">Title</option>
+<option value="HTML">Mr</option>
+<option value="DML">Mrs</option>
+<option value="XML">Ms</option>
+</SELECT>
+</TD>
+</tr>
+
+<tr>
+<td>FirstName</td>
+<td><input type="name" name="" size="28" value="" tab index="3" ></td>
+</tr>
+<tr>
+<tr>
+<td>LastName</td>
+<td><input type="name" name="" size="28" value="" tab index="3"></td>
+</tr>
+<tr>
+<td>Gross Salary</td>
+<td><input id="Grosssalary" name="" size="28" value="" tab index="3" ></td>
+</tr>
+<tr>
+<td>Address</td>
+<td><textarea name="addr" rows="4" cols="30" tabindex="0"accesskey="A"> Enter your address</textarea></td>
+</tr>
+<tr>
+<td>
+<input type="button" onClick="nwindow()" value="Payslip" colspan="2" align ="center">
+</td>
+</tr> 
+</table>
+</body>
+</html>
